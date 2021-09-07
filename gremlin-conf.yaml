@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gremlin-conf
+  namespace: gremlin
+type: Opaque
+stringData:
+  GREMLIN_TEAM_ID: <your_team_id>
+  GREMLIN_TEAM_SECRET: <your_team_secret>
+  GREMLIN_CLUSTER_ID: <your_cluster_id>
