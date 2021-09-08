@@ -55,7 +55,7 @@ jobs:
       - uses: actions/checkout@master
         name: Retrieve CICD Integrations repo and install
         with:
-          repository: git@github.com:gremlin/gremlin-ci-integrations.git
+          repository: gremlin/gremlin-ci-integrations
           ssh-key: ${{ secrets.CICD_SSH_KEY }}
           path: cicd_cli
       - name: Install CICD Integration CLI
