@@ -66,4 +66,4 @@ jobs:
         run: |
           pwd
           ls ..
-          gremlinci --yaml ../gremlincicd.yaml
+          gremlinci --yaml ../../gremlincicd.yaml
