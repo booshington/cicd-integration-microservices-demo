@@ -49,10 +49,13 @@ jobs:
       #   with:
       #     args: get pods
           # args: apply -f deploy/kubernetes/manifests/00-sock-shop-ns.yaml -f deploy/kubernetes/manifests
-      - name: Retrieve CICD Integrations repo
-        uses: webfactory/ssh-agent@v0.5.3
+      - actions/checkout@v2
+      # Make sure the @v0.5.3 matches the current version of the
+      # action 
+      - uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.CICD_SSH_KEY }}
+      - name: Retrieve CICD Integrations repo
         env:
           CICDREPO: git@github.com:gremlin/gremlin-ci-integrations.git
         run: |
