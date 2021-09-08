@@ -33,11 +33,13 @@ e.g.
 ### Enable versioning and encryption on this bucket:
 
 `aws s3api put-bucket-versioning --bucket <YOUR_S3_STATE_STORE_BUCKET>  --versioning-configuration Status=Enabled`
+
 `aws s3api put-bucket-encryption --bucket <YOUR_S3_STATE_STORE_BUCKET> --server-side-encryption-configuration '{"Rules":[{"ApplyServerSideEncryptionByDefault":{"SSEAlgorithm":"AES256"}}]}'`
 
 e.g.
 
 `aws s3api put-bucket-versioning --bucket cicd-demo-boosh-gremlin-rocks-state-store  --versioning-configuration Status=Enabled`
+
 `aws s3api put-bucket-encryption --bucket cicd-demo-boosh-gremlin-rocks-state-store --server-side-encryption-configuration '{"Rules":[{"ApplyServerSideEncryptionByDefault":{"SSEAlgorithm":"AES256"}}]}'`
 
 ### For subsequent `kops` commands, a State Store is required, utilize the follwing environment variable for ease:
@@ -112,13 +114,17 @@ Upon completion, output should be seen as similar to the following:
 `https://www.gremlin.com/docs/infrastructure-layer/install-crio-containerd/`
 
 `export GREMLIN_TEAM_ID=11111111-1111-1111-111111111111`
+
 `export GREMLIN_TEAM_SECRET=1234567890-0987654321-1234567890`
+
 `export GREMLIN_CLUSTER_ID=my-cluster`
 
 Export gremlin variables
 
 `kubectl create namespace gremlin`
+
 `helm repo add gremlin https://helm.gremlin.com/`
+
 `helm install gremlin gremlin/gremlin --namespace gremlin --set gremlin.hostPID=true --set gremlin.container.driver=containerd-runc --set gremlin.secret.managed=true --set gremlin.secret.teamID=$GREMLIN_TEAM_ID --set gremlin.secret.clusterID=$GREMLIN_CLUSTER_ID --set gremlin.secret.teamSecret=$GREMLIN_TEAM_SECRET --set gremlin.secret.type=secret`
 
 ## Enable security groups in AWS to expose web application
