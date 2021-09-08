@@ -45,6 +45,7 @@ jobs:
       - name: Deploy application
         env:
           KUBE_CONFIG: ${{ secrets.KUBECONFIG }}
+          AWS_REGION: us-east-2a
         run: |
           kubectl apply -f deploy/kubernetes/manifests/00-sock-shop-ns.yaml -f deploy/kubernetes/manifests
       - name: Install Gremlin CI CLI
