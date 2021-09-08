@@ -57,7 +57,7 @@ jobs:
         with:
           repository: git@github.com:gremlin/gremlin-ci-integrations.git
           ssh-key: ${{ secrets.CICD_SSH_KEY }}
-        path: cicd_cli
+          path: cicd_cli
       - name: Install CICD Integration CLI
         run: |
           pip3 install -e cicd_cli/engine
