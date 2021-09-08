@@ -49,7 +49,6 @@ jobs:
       #   with:
       #     args: get pods
           # args: apply -f deploy/kubernetes/manifests/00-sock-shop-ns.yaml -f deploy/kubernetes/manifests
-      - actions/checkout@v2
       # Make sure the @v0.5.3 matches the current version of the
       # action 
       - uses: webfactory/ssh-agent@v0.5.3
