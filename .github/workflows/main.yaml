@@ -18,7 +18,7 @@ jobs:
         python-version:
           - 3.9
         region:
-          - us-east-2
+          - us-east-2a
         cluster-name:
           - cicd-demo.boosh.gremlin.rocks
         cluster-id:
@@ -44,7 +44,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
       - name: Deploy application
         run: |
-          kubectl create -f deploy/kubernetes/manifests/00-sock-shop-ns.yaml -f deploy/kubernetes/manifests
+          kubectl apply -f deploy/kubernetes/manifests/00-sock-shop-ns.yaml -f deploy/kubernetes/manifests
       - name: Install Gremlin CI CLI
         run: |
           pip3 install gremlin-ci-engine
