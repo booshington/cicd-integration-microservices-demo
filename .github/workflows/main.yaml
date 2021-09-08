@@ -65,5 +65,5 @@ jobs:
       - name: Run Gremlin Reliability Experiments
         run: |
           pwd
-          ls ..
+          ls ../..
           gremlinci --yaml ../../gremlincicd.yaml
