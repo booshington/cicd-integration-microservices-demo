@@ -157,7 +157,7 @@ After you retrieve a shell, run `gremlin check` to retrieve Gremlin output that 
 
 > % kubectl exec -n gremlin --stdin --tty gremlin-cncml -- /bin/sh
 > 
-> / # gremlin check
+> / \# gremlin check
 > api
 > ====================================================
 > API Response                         : OK                                 
