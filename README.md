@@ -179,3 +179,7 @@ After you update this, navigate to one of your S3 instances to validate your mic
 `http://<your_instance_public_ip>:30001`
 
 **NB: http, not https**
+
+## Enable Github Actions for CICD Pipeline
+
+TBD
