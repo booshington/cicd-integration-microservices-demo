@@ -10,6 +10,7 @@ on:
 jobs:
   deploy-and-attack:
     name: (Re)deploy app and run Gremlin attacks
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         state-store:
