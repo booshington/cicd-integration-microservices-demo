@@ -64,5 +64,4 @@ jobs:
           pip3 install pyyaml wrapt gremlinapi
       - name: Run Gremlin Reliability Experiments
         run: |
-          ls -a ../..
-          gremlinci --yaml ../.github/workflows/gremlincicd.yaml
+          gremlinci --yaml ${{env.GITHUB_WORKSPACE }}/.github/workflows/gremlincicd.yaml
