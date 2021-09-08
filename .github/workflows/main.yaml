@@ -61,7 +61,7 @@ jobs:
       - name: Install CICD Integration CLI
         run: |
           pip3 install -e cicd_cli/engine
-          pip3 install yaml
+          pip3 install pyyaml
       - name: Run Gremlin Reliability Experiments
         run: |
           gremlinci --yaml gremlincicd.yaml
