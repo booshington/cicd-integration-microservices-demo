@@ -49,7 +49,7 @@ jobs:
       #   with:
       #     args: get pods
           # args: apply -f deploy/kubernetes/manifests/00-sock-shop-ns.yaml -f deploy/kubernetes/manifests
-      - uses: webfactory/ssh-agent@0.5.3
+      - uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.CICD_SSH_KEY }}
       - name: Retrieve CICD Integrations repo
