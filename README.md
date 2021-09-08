@@ -24,18 +24,35 @@ To install the application to a `kops` cluster follow the following commands.
 
 ### Begin by creating a state store s3 bucket:
 
+`aws s3api create-bucket --bucket <YOUR_S3_STATE_STORE_BUCKET> --region <REGION> --create-bucket-configuration LocationConstraint=<REGION>`
+
+e.g. 
+
 `aws s3api create-bucket --bucket cicd-demo-boosh-gremlin-rocks-state-store --region us-east-2 --create-bucket-configuration LocationConstraint=us-east-2`
 
 ### Enable versioning and encryption on this bucket:
+
+`aws s3api put-bucket-versioning --bucket <YOUR_S3_STATE_STORE_BUCKET>  --versioning-configuration Status=Enabled`
+`aws s3api put-bucket-encryption --bucket <YOUR_S3_STATE_STORE_BUCKET> --server-side-encryption-configuration '{"Rules":[{"ApplyServerSideEncryptionByDefault":{"SSEAlgorithm":"AES256"}}]}'`
+
+e.g.
 
 `aws s3api put-bucket-versioning --bucket cicd-demo-boosh-gremlin-rocks-state-store  --versioning-configuration Status=Enabled`
 `aws s3api put-bucket-encryption --bucket cicd-demo-boosh-gremlin-rocks-state-store --server-side-encryption-configuration '{"Rules":[{"ApplyServerSideEncryptionByDefault":{"SSEAlgorithm":"AES256"}}]}'`
 
 ### For subsequent `kops` commands, a State Store is required, utilize the follwing environment variable for ease:
 
+`export KOPS_STATE_STORE=s3://<YOUR_S3_STATE_STORE_BUCKET>`
+
+e.g.
+
 `export KOPS_STATE_STORE=s3://cicd-demo-boosh-gremlin-rocks-state-store`
 
 ### Create the `kops` cluster
+
+`kops create cluster --name <YOUR_CLUSTER_NAME> --zones <REGION> --master-size t3.medium --node-size t3.medium`
+
+e.g.
 
 `kops create cluster --name cicd-demo.boosh.gremlin.rocks --zones us-east-2a --master-size t3.medium --node-size t3.medium`
 
@@ -45,16 +62,24 @@ This command will take some time to fully complete.
 
 Upon completion, through `kops get cluster` should show output similar:
 
-$ kops get cluster
-NAME                            CLOUD   ZONES
-cicd-demo.boosh.gremlin.rocks   aws     us-east-2a
-$
+> $ kops get cluster
+> NAME                            CLOUD   ZONES
+> cicd-demo.boosh.gremlin.rocks   aws     us-east-2a
+> $
 
 To view the kops configuration that was created for editing and verification purposes, use the following:
+
+`kops edit cluster --name <YOUR_CLUSTER_NAME>`
+
+e.g.
 
 `kops edit cluster --name cicd-demo.boosh.gremlin.rocks`
 
 Upon validation of the config, this configuration must be applied:
+
+`kops update cluster --name <YOUR_CLUSTER_NAME> --yes`
+
+e.g.
 
 `kops update cluster --name cicd-demo.boosh.gremlin.rocks --yes`
 
@@ -62,21 +87,21 @@ This will take 10-15 minutes and will run the actual creation of your k8s cluste
 
 Upon completion, output should be seen as similar to the following:
 
-$ kops validate cluster --name cicd-demo.boosh.gremlin.rocks
-Validating cluster cicd-demo.boosh.gremlin.rocks
-
-INSTANCE GROUPS
-NAME                    ROLE    MACHINETYPE     MIN     MAX     SUBNETS
-master-us-east-2a       Master  t3.medium       1       1       us-east-2a
-nodes-us-east-2a        Node    t3.medium       1       1       us-east-2a
-
-NODE STATUS
-NAME                                            ROLE    READY
-ip-172-20-42-111.us-east-2.compute.internal     node    True
-ip-172-20-55-245.us-east-2.compute.internal     master  True
-
-Your cluster cicd-demo.boosh.gremlin.rocks is ready
-$ 
+> $ kops validate cluster --name cicd-demo.boosh.gremlin.rocks
+> Validating cluster cicd-demo.boosh.gremlin.rocks
+> 
+> INSTANCE GROUPS
+> NAME                    ROLE    MACHINETYPE     MIN     MAX     SUBNETS
+> master-us-east-2a       Master  t3.medium       1       1       us-east-2a
+> nodes-us-east-2a        Node    t3.medium       1       1       us-east-2a
+> 
+> NODE STATUS
+> NAME                                            ROLE    READY
+> ip-172-20-42-111.us-east-2.compute.internal     node    True
+> ip-172-20-55-245.us-east-2.compute.internal     master  True
+> 
+> Your cluster cicd-demo.boosh.gremlin.rocks is ready
+> $ 
 
 ## Deploy Sock Shop Microservices Application to K8s Cluster:
 
