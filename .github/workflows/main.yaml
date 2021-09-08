@@ -51,7 +51,7 @@ jobs:
           # args: apply -f deploy/kubernetes/manifests/00-sock-shop-ns.yaml -f deploy/kubernetes/manifests
       - name: Retrieve CICD Integrations repo
         env:
-          KEYTEMP: afilename.xxx
+          KEYTEMP: afilename.xxxx
           CICDREPO: git@github.com:gremlin/gremlin-ci-integrations.git
         run: |
           mktemp ${{ env.KEYTEMP }}
