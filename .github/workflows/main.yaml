@@ -59,6 +59,7 @@ jobs:
           git clone ${{ env.CICDREPO }}
       - name: Install Gremlin CI CLI
         run: |
+          cd engine
           pip3 install -e .
       - name: Run Gremlin Reliability Experiments
         run: |
