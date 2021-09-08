@@ -27,7 +27,6 @@ jobs:
           - e071eb40-3f85-42a3-b1eb-403f8512a32d
         os:
           - ubuntu-latest
-        KUBECONFIG: ${{ secrets.KUBECONFIG }}
     steps:
       - uses: actions/checkout@master
       - name: Setup Python
@@ -36,6 +35,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
