@@ -157,7 +157,7 @@ After you retrieve a shell, run `gremlin check` to retrieve Gremlin output that 
 
 > % kubectl exec -n gremlin --stdin --tty gremlin-cncml -- /bin/sh
 > 
-> / \# gremlin check
+> / # gremlin check
 > api
 > ====================================================
 > API Response                         : OK                                 
@@ -171,3 +171,11 @@ After you retrieve a shell, run `gremlin check` to retrieve Gremlin output that 
 ## Enable security groups in AWS to expose web application
 
 At this point, you should have a K8s cluster on which Gremlin and your Microservices application are now running. To access the microservices application, port `30001` needs to be enabled for external access in your AWS security groups for your S3 instances.
+
+In your security groups, ensure for both `master` and `worker` nodes, your `Inbound` rules include access to `TCP Port 30001` from either `any -- 0.0.0.0/0` or whichever IP or source you desire per your security posture.
+
+After you update this, navigate to one of your S3 instances to validate your microservices application is running:
+
+`http://<your_instance_public_ip>:30001`
+
+**NB: http, not https**
