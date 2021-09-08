@@ -107,11 +107,19 @@ Upon completion, output should be seen as similar to the following:
 
 ## Deploy Sock Shop Microservices Application to K8s Cluster:
 
+Deployment of the application to the cluster is handled through `kubectl`. For further assistance with deploy of this microservices application, refer to it's documentation here:
+
+https://github.com/microservices-demo
+
 `kubectl create -f deploy/kubernetes/manifests/00-sock-shop-ns.yaml -f deploy/kubernetes/manifests`
 
 ## Deploy Gremlin to K8s Cluster
 
+Refer to this Gremlin Documentation for further assistance with deploying Gremlin to your K8s cluster.
+
 `https://www.gremlin.com/docs/infrastructure-layer/install-crio-containerd/`
+
+To deploy Gremlin, first export required Gremlin variables.  In this implementation, we are using `secret-based` authentication.
 
 `export GREMLIN_TEAM_ID=11111111-1111-1111-111111111111`
 
@@ -119,12 +127,47 @@ Upon completion, output should be seen as similar to the following:
 
 `export GREMLIN_CLUSTER_ID=my-cluster`
 
-Export gremlin variables
+Then create a `namespace` for Gremlin in kubectl
 
 `kubectl create namespace gremlin`
 
+For this deploy of Gremlin, we will be using `helm`, so ensure Gremlin's repo is added
+
 `helm repo add gremlin https://helm.gremlin.com/`
+
+Then install Gremlin through helm.
 
 `helm install gremlin gremlin/gremlin --namespace gremlin --set gremlin.hostPID=true --set gremlin.container.driver=containerd-runc --set gremlin.secret.managed=true --set gremlin.secret.teamID=$GREMLIN_TEAM_ID --set gremlin.secret.clusterID=$GREMLIN_CLUSTER_ID --set gremlin.secret.teamSecret=$GREMLIN_TEAM_SECRET --set gremlin.secret.type=secret`
 
+## Quick Validation
+
+To validate Gremlin is running (and that your cluster was created successfully), pull your list of nodes and shell in to the cluster:
+
+`kubectl get pods -n gremlin`
+
+From your list of pods, grab the gremlin pod and shell in:
+
+`kubectl exec -n gremlin --stdin --tty <YOUR_GREMLIN_POD> -- /bin/sh`
+
+e.g.
+
+`kubectl exec -n gremlin --stdin --tty gremlin-cncm1 -- /bin/sh`
+
+After you retrieve a shell, run `gremlin check` to retrieve Gremlin output that begins with the following:
+
+> % kubectl exec -n gremlin --stdin --tty gremlin-cncml -- /bin/sh
+> 
+> / # gremlin check
+> api
+> ====================================================
+> API Response                         : OK                                 
+> API Latency (ms)                     : 387                                
+> 
+> auth
+> ====================================================
+> Auth Input Type                      : Secret                             
+> API Response                         : OK                                 
+
 ## Enable security groups in AWS to expose web application
+
+At this point, you should have a K8s cluster on which Gremlin and your Microservices application are now running. To access the microservices application, port `30001` needs to be enabled for external access in your AWS security groups for your S3 instances.
