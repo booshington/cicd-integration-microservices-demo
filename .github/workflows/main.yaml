@@ -27,8 +27,7 @@ jobs:
           - e071eb40-3f85-42a3-b1eb-403f8512a32d
         os:
           - ubuntu-latest
-        KUBECONFIG:
-          ${{ secrets.KUBECONFIG }}
+        KUBECONFIG: ${{ secrets.KUBECONFIG }}
     steps:
       - uses: actions/checkout@master
       - name: Setup Python
