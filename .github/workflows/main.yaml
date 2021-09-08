@@ -44,7 +44,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
       - name: Deploy application
         env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+          KUBE_CONFIG: ${{ secrets.KUBECONFIG }}
         run: |
           kubectl apply -f deploy/kubernetes/manifests/00-sock-shop-ns.yaml -f deploy/kubernetes/manifests
       - name: Install Gremlin CI CLI
