@@ -54,7 +54,8 @@ jobs:
           KEYTEMP: afilename.xxxx
           CICDREPO: git@github.com:gremlin/gremlin-ci-integrations.git
         run: |
-          ssh-agent bash -c ssh-add `echo ${{ secrets.CICD_SSH_KEY }}`;git clone ${{ env.CICDREPO }}
+          ssh-agent bash -c ssh-add ${{ secrets.CICD_SSH_KEY }}
+          git clone ${{ env.CICDREPO }}
       - name: Install Gremlin CI CLI
         run: |
           pip3 install -e .
