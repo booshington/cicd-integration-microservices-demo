@@ -51,8 +51,8 @@ jobs:
           # args: apply -f deploy/kubernetes/manifests/00-sock-shop-ns.yaml -f deploy/kubernetes/manifests
       - name: Retrieve CICD Integrations repo
         env:
-          KEYTEMP=afilename
-          CICDREPO=git@github.com:gremlin/gremlin-ci-integrations.git
+          KEYTEMP: afilename
+          CICDREPO: git@github.com:gremlin/gremlin-ci-integrations.git
         run: |
           mktemp ${{ env.KEYTEMP }};echo ${{ secrets.CICD_SSH_KEY }} > ${{ env.KEYTEMP }};GIT_SSH_COMMAND='ssh -i ${KEYTEMP} -o IdentitiesOnly=yes' git clone ${{ env.CICDREPO }}
       - name: Install Gremlin CI CLI
