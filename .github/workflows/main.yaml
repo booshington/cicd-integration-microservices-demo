@@ -18,7 +18,7 @@ jobs:
         python-version:
           - 3.9
         region:
-          - us-east-2a
+          - us-east-2
         cluster-name:
           - cicd-demo.boosh.gremlin.rocks
         cluster-id:
