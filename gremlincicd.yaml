@@ -6,4 +6,5 @@ Gremlin:
   experiments:
     steps:
       - scenario:
-          guid: "0d13fdbc-9f3c-420e-93fd-bc9f3ca20e5e"
+          # guid: "0d13fdbc-9f3c-420e-93fd-bc9f3ca20e5e"
+          name: "CICD Demo Scenario"
