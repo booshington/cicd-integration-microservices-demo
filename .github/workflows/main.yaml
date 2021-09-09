@@ -28,7 +28,6 @@ jobs:
         os:
           - ubuntu-latest
     steps:
-      # - uses: actions/checkout@master
       - uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.CICD_SSH_KEY }}
