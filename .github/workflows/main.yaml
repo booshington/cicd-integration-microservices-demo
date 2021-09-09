@@ -68,5 +68,7 @@ jobs:
           repository: booshington/cicd-integration-microservices-demo
           path: microservices-demo
       - name: Run Gremlin Reliability Experiments
+        env:
+          GREMLIN_API_KEY: ${{ env.GREMLIN_API_KEY }}
         run: |
           gremlinci --yaml microservices-demo/gremlincicd.yaml

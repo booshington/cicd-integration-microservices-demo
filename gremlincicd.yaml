@@ -1,12 +1,5 @@
 Gremlin:
   config:
-    authentication: # At least one form of authentication must be provided
-      apikey: "apikey"
-      bearer_token: ""
-      oauth_token: ""
-      password: "password"
-      user: "kyle.bouchard+demo@gremlin.com"
-      # Include SAML
     logging_level: "debug"
     enabled: True
     team_id: 'e071eb40-3f85-42a3-b1eb-403f8512a32d' #'15749851-e6b5-5a92-a7a7-553bcff01beb'
