@@ -62,6 +62,11 @@ jobs:
         run: |
           pip3 install -e cicd_cli/engine
           pip3 install pyyaml wrapt gremlinapi
+      - uses: actions/checkout@master
+        name: Retrieve this Microservices repo
+        with:
+          repository: booshington/cicd-integration-microservices-demo
+          path: microservices-demo
       - name: Run Gremlin Reliability Experiments
         run: |
-          gremlinci --yaml ${{ env.GITHUB_ACTION_PATH }}/gremlincicd.yaml
+          gremlinci --yaml microservices-demo/gremlincicd.yaml
