@@ -212,7 +212,7 @@ As an example, consider the following github workflow YAML:
             python-version:
             - 3.9
             user-repo:
-            - booshington/cicd-integration-microservices-demo #replace with your repo
+            - your_github_account/your_repo
         steps:
         - name: Setup Python
             uses: actions/setup-python@v1
@@ -224,11 +224,11 @@ As an example, consider the following github workflow YAML:
             repository: gremlin/gremlin-ci-integrations
             ssh-key: ${{ secrets.CICD_SSH_KEY }}
             path: cicd_cli
-        - name: Install CICD Integration CLI
+        - name: Install CICD Integration CLI and dependencies
             run: |
             pip3 install -e cicd_cli/engine
             pip3 install pyyaml wrapt gremlinapi
-        - name: Retrieve this Microservices repo
+        - name: Retrieve User repo
             uses: actions/checkout@master 
             with:
             repository: ${{ matrix.user_repo }}
@@ -253,3 +253,4 @@ Also consider the following gremlincicd YAML:
         - scenario:
             guid: "YOUR_SCENARIO_GUID"
 
+For more information on syntax of the gremlincicd YAML, please consult additional documentation in the `gremlin/gremlin-ci-integrations` repository.
