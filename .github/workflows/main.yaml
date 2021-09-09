@@ -69,6 +69,6 @@ jobs:
           path: microservices-demo
       - name: Run Gremlin Reliability Experiments
         env:
-          GREMLIN_API_KEY: ${{ env.GREMLIN_API_KEY }}
+          GREMLIN_API_KEY: ${{ secrets.GREMLIN_API_KEY }}
         run: |
           gremlinci --yaml microservices-demo/gremlincicd.yaml
