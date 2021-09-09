@@ -182,4 +182,49 @@ After you update this, navigate to one of your S3 instances to validate your mic
 
 ## Enable Github Actions for CICD Pipeline
 
-TBD
+To enable github actions, consider the following yaml:
+
+    name: ci
+    on:
+    push:
+        branches:
+        - "*"  # run for branches
+        tags:
+        - "*"  # run for tags
+    jobs:
+    deploy-and-attack:
+        name: Demonstration of Gremlin Integration Into CICD Pipeline
+        runs-on: ${{ matrix.os }}
+        strategy:
+        matrix:
+            os:
+            - ubuntu-latest
+            python-version:
+            - 3.9
+            user-repo:
+            - booshington/cicd-integration-microservices-demo #replace with your repo
+        steps:
+        - name: Setup Python
+            uses: actions/setup-python@v1
+            with:
+            python-version: ${{ matrix.python-version }}
+        - name: Retrieve CICD Integrations repo and install
+            uses: actions/checkout@master
+            with:
+            repository: gremlin/gremlin-ci-integrations
+            ssh-key: ${{ secrets.CICD_SSH_KEY }}
+            path: cicd_cli
+        - name: Install CICD Integration CLI
+            run: |
+            pip3 install -e cicd_cli/engine
+            pip3 install pyyaml wrapt gremlinapi
+        - name: Retrieve this Microservices repo
+            uses: actions/checkout@master 
+            with:
+            repository: ${{ matrix.user_repo }}
+            path: microservices-demo
+        - name: Run Gremlin Reliability Experiments
+            env:
+            GREMLIN_API_KEY: ${{ secrets.GREMLIN_API_KEY }}
+            run: |
+            gremlinci --yaml microservices-demo/gremlincicd.yaml
