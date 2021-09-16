@@ -1,0 +1,10 @@
+Gremlin:
+  config:
+    logging_level: "debug"
+    enabled: True
+    team_id: 'e071eb40-3f85-42a3-b1eb-403f8512a32d'
+  experiments:
+    steps:
+      - scenario:
+          # guid: "0d13fdbc-9f3c-420e-93fd-bc9f3ca20e5e"
+          name: "CICD Demo Scenario"

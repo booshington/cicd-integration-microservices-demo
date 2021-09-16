@@ -179,3 +179,78 @@ After you update this, navigate to one of your S3 instances to validate your mic
 `http://<your_instance_public_ip>:30001`
 
 **NB: http, not https**
+
+## Enable Github Actions for CICD Pipeline
+
+To enable github actions you require access to the `gremlin/gremlin-ci-integrations` repo.  Additionally, a few Github secrets must be installed.  Specifically:
+
+- `CICD_SSH_KEY`
+
+This SSH key is an SSH private key added to your github account.  Once added to your account, add the contents of the private key as a github secret on your repository.  Name the secret `CICD_SSH_KEY`. This will enable you to check out the cicd integrations repository to execute gremlin attacks as part of your pipeline.
+
+- `GREMLIN_API_KEY`
+
+This is your Gremlin API Key, which can be retrieved from the Gremlin UI under your team.  For more information on retrieval of your API key, please consult Gremlin documentation.
+
+As an example, consider the following github workflow YAML:
+
+    name: ci
+    on:
+    push:
+        branches:
+        - "*"  # run for branches
+        tags:
+        - "*"  # run for tags
+    jobs:
+    deploy-and-attack:
+        name: Demonstration of Gremlin Integration Into CICD Pipeline
+        runs-on: ${{ matrix.os }}
+        strategy:
+        matrix:
+            os:
+            - ubuntu-latest
+            python-version:
+            - 3.9
+            user-repo:
+            - your_github_account/your_repo
+        steps:
+        - name: Setup Python
+            uses: actions/setup-python@v1
+            with:
+            python-version: ${{ matrix.python-version }}
+        - name: Retrieve CICD Integrations repo and install
+            uses: actions/checkout@master
+            with:
+            repository: gremlin/gremlin-ci-integrations
+            ssh-key: ${{ secrets.CICD_SSH_KEY }}
+            path: cicd_cli
+        - name: Install CICD Integration CLI and dependencies
+            run: |
+            pip3 install -e cicd_cli/engine
+            pip3 install pyyaml wrapt gremlinapi
+        - name: Retrieve User repo
+            uses: actions/checkout@master 
+            with:
+            repository: ${{ matrix.user_repo }}
+            path: microservices-demo
+        - name: Run Gremlin Reliability Experiments
+            env:
+            GREMLIN_API_KEY: ${{ secrets.GREMLIN_API_KEY }}
+            run: |
+            gremlinci --yaml microservices-demo/gremlincicd.yaml
+
+This YAML defines a github action sequence that sets up Python, checks out the CICD Integrations code and installs it, retrieves your repository, and executes the Gremlin attacks as defined in your gremlincicd.yaml
+
+Also consider the following gremlincicd YAML:
+
+    Gremlin:
+    config:
+        logging_level: "info"
+        enabled: True
+        team_id: 'YOUR_TEAM_ID'
+    experiments:
+        steps: 
+        - scenario:
+            guid: "YOUR_SCENARIO_GUID"
+
+For more information on syntax of the gremlincicd YAML, please consult additional documentation in the `gremlin/gremlin-ci-integrations` repository.
